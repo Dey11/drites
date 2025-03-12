@@ -17,7 +17,7 @@ export const features: Feature[] = [
   {
     id: 2,
     icon: BookOpen,
-    title: "Engaged Community",
+    title: "Engaging Community",
     description: "Connect with like-minded readers and writers.",
   },
   {

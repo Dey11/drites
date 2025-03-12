@@ -38,7 +38,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body
-          className={`${geistSans.variable} tracking-wide text-brand-text antialiased`}
+          className={`${montserrat.variable} tracking-wide text-brand-text antialiased`}
         >
           <Header />
           <main className="mx-auto">

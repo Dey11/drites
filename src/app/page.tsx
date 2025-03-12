@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { auth } from "@clerk/nextjs/server";
 import {
@@ -7,8 +8,6 @@ import {
   ChartNoAxesColumn,
   Feather,
   Tag,
-  Users,
-  Zap,
 } from "lucide-react";
 
 import FeatureBox from "@/components/home/feature-box";
@@ -42,14 +41,18 @@ export default async function Home() {
             you.
           </Para>
 
-          <Button className="mt-8 flex gap-x-2 px-7">
-            <span>Start Reading</span>
-            <ArrowRight />
-          </Button>
+          <Link href="/posts" className="mt-8 flex gap-x-2 px-7">
+            <Button>
+              <span>Start Reading</span>
+              <ArrowRight />
+            </Button>
+          </Link>
         </section>
       </div>
 
       <section className="mx-auto w-full bg-brand-section px-3 py-20 pb-20 text-center">
+        <H2 className="pb-10 text-4xl">Discover a world of ideas</H2>
+
         <div className="mx-auto grid max-w-screen-lg grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <FeatureBox
