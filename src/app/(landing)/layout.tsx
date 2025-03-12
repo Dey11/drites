@@ -1,23 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import localFont from "next/font/local";
-import { Suspense } from "react";
 
 import Header from "@/components/header";
 import Providers from "@/components/providers";
 
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import "../globals.css";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -41,9 +28,7 @@ export default function RootLayout({
           className={`${montserrat.variable} tracking-wide text-brand-text antialiased`}
         >
           <Header />
-          <main className="mx-auto">
-            <Suspense>{children}</Suspense>
-          </main>
+          <main className="mx-auto">{children}</main>
         </body>
       </html>
     </Providers>

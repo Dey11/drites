@@ -31,6 +31,7 @@ export default async function Home() {
             className="absolute -z-10"
             width={500}
             height={500}
+            priority
           />
 
           <H1>Where ideas find</H1>
