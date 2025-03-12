@@ -4,6 +4,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { H3 } from "./typography/h3";
 import { Button } from "./ui/button";
+import { Suspense } from "react";
 
 const Header = () => {
   return (
@@ -12,6 +13,7 @@ const Header = () => {
         <Link href="/">
           <H3>Drites.</H3>
         </Link>
+        <Suspense fallback={<div className="h-8 w-8 animate-pulse rounded-full bg-gray-200" />}>
         <SignedOut>
           <Button asChild>
             <SignInButton
@@ -23,6 +25,7 @@ const Header = () => {
         <SignedIn>
           <UserButton />
         </SignedIn>
+        </Suspense>
       </div>
     </header>
   );

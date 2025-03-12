@@ -38,10 +38,10 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body
-          className={`${montserrat.variable} tracking-wide text-brand-text antialiased`}
+          className={`${geistSans.variable} tracking-wide text-brand-text antialiased`}
         >
           <Header />
-          <main className="mx-auto max-w-screen-lg">
+          <main className="mx-auto">
             <Suspense>{children}</Suspense>
           </main>
         </body>
