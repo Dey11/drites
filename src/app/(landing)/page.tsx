@@ -19,8 +19,6 @@ import { Button } from "@/components/ui/button";
 import { features } from "@/lib/constants";
 
 export default async function Home() {
-  const { userId } = await auth();
-
   return (
     <div className="pb-16">
       <div className="relative h-screen w-full overflow-hidden">
