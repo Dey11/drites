@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { auth } from "@clerk/nextjs/server";
 import {
   ArrowRight,
   BookOpen,
@@ -35,7 +34,7 @@ export default async function Home() {
           <H1>Where ideas find</H1>
           <H1>their audience.</H1>
 
-          <Para>
+          <Para className="text-lg">
             Read, write, and connect with thinkers on any topic that matters to
             you.
           </Para>

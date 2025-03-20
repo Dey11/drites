@@ -7,8 +7,8 @@ import { Muted } from "@/components/typography/muted";
 
 const NotFound = () => {
   return (
-    <div className="flex h-[80dvh] w-full flex-col items-center justify-center gap-y-5">
-      <H1>Not Found</H1>
+    <div className="flex h-[90dvh] w-full flex-col items-center justify-center gap-y-5">
+      <H1>Not Found...</H1>
       <section className="text-center">
         <H2>
           Please return to the{" "}
