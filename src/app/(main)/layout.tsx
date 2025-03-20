@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Providers from "@/components/providers";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         >
           <Header />
           <main className="mx-auto">{children}</main>
+          <Footer />
         </body>
       </html>
     </Providers>

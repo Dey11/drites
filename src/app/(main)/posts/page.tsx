@@ -4,11 +4,11 @@ import { H2 } from "@/components/typography/h2";
 
 const page = () => {
   return (
-    <div className="mx-auto max-w-screen-lg px-3">
+    <div className="mx-auto max-w-screen-lg px-3 pb-10">
       <H2 className="py-5">Latest Posts</H2>
 
       {post.map(({ id, title, description, likes, author, createdAt }) => (
-        <div key={id} className="mb-2">
+        <div key={id} className="mb-3">
           <PostCard
             id={id}
             title={title}
