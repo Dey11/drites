@@ -33,7 +33,9 @@ const Header = () => {
                 placeholder="Search Posts..."
                 className="mx-2 h-9 border border-black bg-brand-section"
               />
-              <Button className="font-medium">Create Post</Button>
+              <Link href={"/create"}>
+                <Button className="font-medium">Create Post</Button>
+              </Link>
               <UserButton />
             </div>
           </SignedIn>
