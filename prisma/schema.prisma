@@ -19,20 +19,22 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   Bookmark  Bookmark[]
+  Comment   Comment[]
 }
 
 model Post {
   id       String @id @default(cuid())
   title    String
-  content  String
+  content  String @db.Text
   authorId String
 
   author   User       @relation(fields: [authorId], references: [id])
   likes    PostLike[]
   Bookmark Bookmark[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Comment   Comment[]
 }
 
 model PostLike {
@@ -52,5 +54,15 @@ model Bookmark {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  content   String   @db.Text
   createdAt DateTime @default(now())
 }
