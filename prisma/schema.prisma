@@ -23,10 +23,11 @@ model User {
 }
 
 model Post {
-  id       String @id @default(cuid())
-  title    String
-  content  String @db.Text
-  authorId String
+  id          String @id @default(cuid())
+  title       String
+  description String
+  content     String @db.Text
+  authorId    String
 
   author   User       @relation(fields: [authorId], references: [id])
   likes    PostLike[]
