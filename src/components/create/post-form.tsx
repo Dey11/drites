@@ -28,6 +28,19 @@ export default function CreateForm() {
       </div>
 
       <div className="flex flex-col gap-y-2">
+        <label htmlFor="Description" className="">
+          Description
+        </label>
+        <Input
+          id="description"
+          type="text"
+          name="description"
+          placeholder="A line about your blog"
+          className="bg-brand-section"
+        />
+      </div>
+
+      <div className="flex flex-col gap-y-2">
         <label htmlFor="content">Content</label>
         <Textarea
           id="content"

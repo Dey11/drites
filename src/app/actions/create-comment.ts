@@ -21,10 +21,17 @@ export async function createComment(
       throw new Error("User not authenticated");
     }
 
+    const postId = formData.get("postId") as string;
+    const content = formData.get("comment") as string;
+
+    if (!postId || !content) {
+      throw new Error("All fields are required");
+    }
+
     const newComment = await prisma.comment.create({
       data: {
-        postId: formData.get("postId") as string,
-        content: formData.get("comment") as string,
+        postId,
+        content,
         userId: session.userId,
       },
     });
@@ -37,6 +44,12 @@ export async function createComment(
     };
   } catch (err) {
     console.error(err);
+    if (err instanceof Error) {
+      return {
+        success: false,
+        message: err.message,
+      };
+    }
     return {
       success: false,
       message: "Error creating post",
