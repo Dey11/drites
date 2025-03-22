@@ -15,7 +15,7 @@ const page = async () => {
       author: {
         select: {
           id: true,
-          name: true,
+          username: true,
         },
       },
       likes: {
@@ -37,7 +37,7 @@ const page = async () => {
             title={post.title}
             description={post.description!}
             likes={post.likes.length}
-            author={post.author.name!}
+            author={post.author.username!}
             createdAt={post.createdAt.toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",

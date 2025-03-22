@@ -72,7 +72,7 @@ export default async function PostPage({ params }: Params) {
         userId: true,
         user: {
           select: {
-            name: true,
+            username: true,
           },
         },
       },
@@ -83,7 +83,7 @@ export default async function PostPage({ params }: Params) {
     return {
       id: comment.id,
       content: comment.content,
-      user: comment.user.name!,
+      user: comment.user.username!,
       img: "Placeholder", // Placeholder for user image
       userId: comment.userId,
       createdAt: comment.createdAt.toISOString(),
