@@ -1,21 +1,48 @@
 import { Bookmark, Heart } from "lucide-react";
 
 import { H2 } from "@/components/typography/h2";
+import { prisma } from "@/lib/prisma";
 
-const page = () => {
+const page = async () => {
+  const allPosts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    omit: {
+      content: true,
+    },
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
   return (
-    <div className="mx-auto max-w-screen-lg px-3 pb-10">
+    <div className="mx-auto min-h-dvh max-w-screen-lg px-3 pb-10">
       <H2 className="py-5">Latest Posts</H2>
 
-      {post.map(({ id, title, description, likes, author, createdAt }) => (
-        <div key={id} className="mb-3">
+      {allPosts.map((post) => (
+        <div key={post.id} className="mb-3">
           <PostCard
-            id={id}
-            title={title}
-            description={description}
-            likes={likes}
-            author={author}
-            createdAt={createdAt}
+            id={post.id}
+            title={post.title}
+            description={post.description!}
+            likes={post.likes.length}
+            author={post.author.name!}
+            createdAt={post.createdAt.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           />
         </div>
       ))}
@@ -25,51 +52,8 @@ const page = () => {
 
 export default page;
 
-const post = [
-  {
-    id: 1,
-    title: "Post 1",
-    description: "This is the description for post 1",
-    likes: 100,
-    author: "Author 1",
-    createdAt: "2023-10-01",
-  },
-  {
-    id: 2,
-    title: "Post 2",
-    description: "This is the description for post 2",
-    likes: 200,
-    author: "Author 2",
-    createdAt: "2023-10-02",
-  },
-  {
-    id: 3,
-    title: "Post 3",
-    description: "This is the description for post 3",
-    likes: 150,
-    author: "Author 3",
-    createdAt: "2023-10-03",
-  },
-  {
-    id: 4,
-    title: "Post 4",
-    description: "This is the description for post 4",
-    likes: 250,
-    author: "Author 4",
-    createdAt: "2023-10-04",
-  },
-  {
-    id: 5,
-    title: "Post 5",
-    description: "This is the description for post 5",
-    likes: 300,
-    author: "Author 5",
-    createdAt: "2023-10-05",
-  },
-];
-
 type PostType = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   likes: number;
@@ -99,7 +83,9 @@ function PostCard({
 
       <h3 className="text-lg font-bold">{title}</h3>
 
-      <p>{description}</p>
+      <p>
+        {description.slice(0, 100) + (description.length > 100 ? "..." : "")}
+      </p>
 
       <div className="flex items-center justify-between text-sm">
         <p className="flex items-center gap-1">
