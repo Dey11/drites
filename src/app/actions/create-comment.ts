@@ -1,0 +1,45 @@
+"use server";
+
+import { revalidatePath, revalidateTag } from "next/cache";
+
+import { auth } from "@clerk/nextjs/server";
+
+import { prisma } from "@/lib/prisma";
+
+type PreviousStateType = {
+  success: boolean;
+  message: string;
+};
+
+export async function createComment(
+  previousState: PreviousStateType | null,
+  formData: FormData
+) {
+  try {
+    const session = await auth();
+    if (!session.userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const newComment = await prisma.comment.create({
+      data: {
+        postId: formData.get("postId") as string,
+        content: formData.get("comment") as string,
+        userId: session.userId,
+      },
+    });
+
+    revalidatePath(`posts/${formData.get("postId")}`);
+
+    return {
+      success: true,
+      message: "Comment created successfully",
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      success: false,
+      message: "Error creating post",
+    };
+  }
+}
