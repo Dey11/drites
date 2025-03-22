@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { auth } from "@clerk/nextjs/server";
 import { Bookmark, Heart, MessageCircle, Share2 } from "lucide-react";
@@ -91,7 +91,7 @@ export default async function PostPage({ params }: Params) {
   });
 
   if (!post) {
-    return notFound();
+    redirect("/not-found");
   }
 
   return (
