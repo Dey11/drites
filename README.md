@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drites - A Next.js Blogging Platform
+
+A modern blogging platform built with Next.js, TypeScript, and PostgreSQL.
+
+## Features
+
+- User authentication and profiles
+- Create and publish blog posts
+- Comment on posts
+- Responsive design
+
+## Tech Stack
+
+- **Frontend & Backend**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Database**: PostgreSQL
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Authentication**: [Clerk](https://clerk.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+
+## Prerequisites
+
+- Node.js 18+ and pnpm
+- Docker and Docker Compose
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd write
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+Copy the example env file and update it with your own values:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cp example.env .env
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Required environment variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Database connection strings
+- Clerk API keys (for authentication)
 
-## Deploy on Vercel
+### 4. Set up the database with Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project includes a Docker Compose configuration for PostgreSQL. Start the database with:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker-compose up -d
+```
+
+This will:
+
+- Start a PostgreSQL container
+- Create a database named `mydb`
+- Set up a user with username `user` and password `password`
+- Expose the database on port `5432`
+
+You can connect to the database using the following connection string:
+
+```
+postgresql://user:password@localhost:5432/mydb
+```
+
+### 5. Run database migrations
+
+```bash
+pnpm prisma migrate dev
+```
+
+### 6. Start the development server
+
+```bash
+pnpm dev
+```
+
+Your application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Project Structure
+
+```
+/src
+  /app - Next.js application routes
+  /components - React components
+  /lib - Utility functions and shared code
+/prisma - Prisma schema and migrations
+/public - Static assets
+```
+
+## Deployment
+
+This application can be deployed to platforms like Vercel or any platform that supports Next.js.
+
+For the database, you can use:
+
+- A managed PostgreSQL service (like Neon, Supabase, or Railway)
+- Self-hosted PostgreSQL on a cloud provider
+
+Update your `.env` file with production database credentials before deploying.
