@@ -81,9 +81,9 @@ function PostCard({
         </div>
       </div>
 
-      <h3 className="text-lg font-bold">{title}</h3>
+      <h3 className="line-clamp-1 text-lg font-bold">{title}</h3>
 
-      <p>
+      <p className="line-clamp-2">
         {description.slice(0, 100) + (description.length > 100 ? "..." : "")}
       </p>
 

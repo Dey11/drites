@@ -4,7 +4,7 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { z } from "zod";
 
-import db from "@/services/db";
+import { prisma } from "@/lib/prisma";
 
 const newUserObj = z.object({
   id: z.string(),
@@ -78,7 +78,15 @@ export async function POST(req: Request) {
   if (evt.type === "user.created") {
     const res = newUserObj.safeParse(userObj);
     if (res.success) {
-      const newUserCreated = await db.createUser(res.data);
+      const newUserCreated = await prisma.user.create({
+        data: {
+          id: res.data.id,
+          email: res.data.email,
+          name: res.data.name,
+          username: res.data.username,
+          createdAt: res.data.createdAt,
+        },
+      });
     }
     console.log("userId:", evt.data.id);
   }
