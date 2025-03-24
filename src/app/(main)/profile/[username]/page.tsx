@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import Avatar from "@/components/avatar";
@@ -9,6 +10,50 @@ type ProfileProps = {
     username: string;
   }>;
 };
+
+async function getUserByUsername(username: string) {
+  return await prisma.user.findFirst({
+    where: {
+      username,
+    },
+  });
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}): Promise<Metadata> {
+  const { username } = await params;
+
+  const user = await getUserByUsername(username);
+
+  if (!user) {
+    return {
+      title: "Profile Not Found",
+      description: "The requested user profile could not be found.",
+    };
+  }
+
+  return {
+    title: `${user.name || username}'s Profile`,
+    description: `Check out ${user.name || username}'s posts and activity on Drites.`,
+    alternates: {
+      canonical: `/profile/${username}`,
+    },
+    openGraph: {
+      type: "profile",
+      url: `/profile/${username}`,
+      title: `${user.name || username}'s Profile | Drites.`,
+      description: `Check out ${user.name || username}'s posts and activity on Drites.`,
+    },
+    twitter: {
+      card: "summary",
+      title: `${user.name || username}'s Profile | Drites.`,
+      description: `Check out ${user.name || username}'s posts and activity on Drites.`,
+    },
+  };
+}
 
 export default async function ProfilePage({ params }: ProfileProps) {
   const { username } = await params;
@@ -62,8 +107,9 @@ export default async function ProfilePage({ params }: ProfileProps) {
   ]);
 
   return (
-    <div className="mx-auto min-h-dvh max-w-screen-lg p-3 pt-5">
-      <div className="flex items-center gap-5">
+    <div>
+      <div className="mx-auto min-h-dvh max-w-screen-lg p-3 pt-5">
+        <div className="flex items-center gap-5"></div>
         <Avatar name={username} className="md:size-20 md:text-3xl" />
 
         <div className="flex flex-col gap-1">

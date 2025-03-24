@@ -12,8 +12,45 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Write.",
-  description: "Just another blog.",
+  title: {
+    default: "Drites. - Express Your Ideas",
+    template: "%s | Drites.",
+  },
+  description:
+    "A modern blogging platform for sharing ideas, stories, and knowledge. Join our community of writers and readers.",
+  keywords: [
+    "blog",
+    "writing",
+    "articles",
+    "content creation",
+    "technical",
+    "cs",
+    "writers community",
+  ],
+  metadataBase: new URL("https://drites.site"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://drites.site",
+    title: "Drites. - Express Your Ideas",
+    description:
+      "A modern blogging platform for sharing ideas, stories, and knowledge.",
+    siteName: "Drites.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

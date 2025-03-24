@@ -20,28 +20,59 @@ type Params = {
 };
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
-  const params = await props.params;
+  const { slug } = await props.params;
+
   const post = await prisma.post.findUnique({
     where: {
-      id: params.slug,
+      id: slug,
     },
     select: {
       title: true,
       content: true,
+      description: true,
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+      createdAt: true,
+      updatedAt: true,
     },
   });
 
   if (!post) {
-    return notFound();
+    return {
+      title: "Post Not Found",
+      description: "The requested post could not be found.",
+    };
   }
 
-  const title = post.title;
+  const description = post.description.substring(0, 160);
+  const keywords = ["blog", "article", "technical writing"];
 
   return {
-    title,
+    title: post.title,
+    description: description,
+    keywords: keywords,
+    authors: [{ name: post.author.name || post.author.username! }],
+    alternates: {
+      canonical: `/posts/${slug}`,
+    },
     openGraph: {
-      title,
-      description: (post.content as string).substring(0, 25) + "...",
+      type: "article",
+      url: `/posts/${slug}`,
+      title: post.title,
+      description: description,
+      publishedTime: post.createdAt.toDateString(),
+      modifiedTime: post.updatedAt.toDateString(),
+      authors: post.author.name,
+      section: "Blog",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: description,
     },
   };
 }

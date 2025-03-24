@@ -1,9 +1,29 @@
+import { Metadata } from "next";
 import Link from "next/link";
 
 import { Bookmark, Heart } from "lucide-react";
 
 import { H2 } from "@/components/typography/h2";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Latest Posts | Drites",
+  description: "Explore the latest posts and articles on Drites platform",
+  keywords: ["drites", "blog", "articles", "posts", "writing", "content"],
+  openGraph: {
+    title: "Latest Posts | Drites",
+    description: "Explore the latest posts and articles on Drites platform",
+    url: "https://drites.site/posts",
+    siteName: "Drites",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Latest Posts | Drites",
+    description: "Explore the latest posts and articles on Drites platform",
+  },
+};
 
 const page = async () => {
   const allPosts = await prisma.post.findMany({

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,6 +17,27 @@ import { H3 } from "@/components/typography/h3";
 import { Para } from "@/components/typography/para";
 import { Button } from "@/components/ui/button";
 import { features } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  title: "Drites. - Home | Share Your Stories",
+  description:
+    "Welcome to Drites, the modern blogging platform where you can share your thoughts, stories, and ideas with the world.",
+  keywords: [
+    "blogging platform",
+    "writing community",
+    "share stories",
+    "technical writing",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Drites. - Home | Share Your Stories",
+    description:
+      "Welcome to Drites, the modern blogging platform where you can share your thoughts, stories, and ideas with the world.",
+    url: "/",
+  },
+};
 
 export default async function Home() {
   return (
