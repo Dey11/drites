@@ -88,7 +88,20 @@ export async function POST(req: Request) {
         },
       });
     }
-    console.log("userId:", evt.data.id);
+  }
+  if (evt.type === "user.updated") {
+    const res = newUserObj.safeParse(userObj);
+    if (res.success) {
+      const updatedUser = await prisma.user.update({
+        where: { id: res.data.id },
+        data: {
+          email: res.data.email,
+          name: res.data.name,
+          username: res.data.username,
+          createdAt: res.data.createdAt,
+        },
+      });
+    }
   }
 
   return new Response("Webhook received", { status: 200 });
