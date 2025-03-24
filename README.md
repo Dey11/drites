@@ -6,8 +6,11 @@ A modern blogging platform built with Next.js, TypeScript, and PostgreSQL.
 
 - User authentication and profiles
 - Create and publish blog posts
-- Comment on posts
+- Comment, likes on posts
+- Optimistic updates (from React)
+- Markdown for writing posts
 - Responsive design
+- Proper SEO support
 
 ## Tech Stack
 
