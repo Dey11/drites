@@ -29,10 +29,10 @@ const Header = () => {
           </SignedOut>
           <SignedIn>
             <div className="flex items-center gap-x-2">
-              <Input
+              {/* <Input
                 placeholder="Search Posts..."
                 className="mx-2 h-9 border border-black bg-brand-section"
-              />
+              /> */}
               <Link href={"/create"}>
                 <Button className="font-medium">Create Post</Button>
               </Link>

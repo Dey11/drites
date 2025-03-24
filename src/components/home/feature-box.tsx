@@ -17,7 +17,7 @@ export default function FeatureBox({
   description,
 }: FeatureBoxProps) {
   return (
-    <div className="flex h-full flex-col rounded-lg bg-brand-bg px-5 py-5 shadow-md sm:px-10">
+    <div className="flex h-full flex-col justify-between rounded-lg bg-brand-bg px-5 py-5 shadow-md sm:px-10">
       <Icon className="mx-auto mb-5 h-10 w-10 text-brand-blue" />
 
       <H2 className="break-words pb-4">{title}</H2>

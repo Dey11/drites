@@ -121,10 +121,12 @@ export default async function Home() {
           Start reading and writing on topics that matter to you. Connect with a
           global audience and share your perspective.
         </Para>
-        <Button className="mx-auto mt-5 flex gap-x-2 px-8 font-normal">
-          Get started for free
-          <ArrowRight />
-        </Button>
+        <Link href="/posts">
+          <Button className="mx-auto mt-5 flex gap-x-2 px-8 font-normal">
+            Get started for free
+            <ArrowRight />
+          </Button>
+        </Link>
       </section>
     </div>
   );
