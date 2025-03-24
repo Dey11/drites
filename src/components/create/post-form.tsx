@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useActionState } from "react";
 
 import { createPost } from "@/app/actions/posts";
@@ -12,8 +13,12 @@ import { Textarea } from "../ui/textarea";
 export default function CreateForm() {
   const [state, formAction, isPending] = useActionState(createPost, null);
 
+  if (state?.success) {
+    redirect("/posts/" + state.message);
+  }
+
   return (
-    <form action={formAction} className="flex flex-col gap-y-5">
+    <form action={formAction} className="flex flex-col gap-y-5 pb-20">
       <div className="flex flex-col gap-y-2">
         <label htmlFor="title" className="">
           Title
@@ -62,15 +67,11 @@ export default function CreateForm() {
         <Button disabled={isPending}>Publish</Button>
       </div>
 
-      {state?.success && (
-        <div className="mt-5 flex w-full items-center justify-center rounded-lg bg-green-100 p-4 text-sm text-green-700">
-          {state.message}
-        </div>
-      )}
+      {/* {state?.success && (
+        <p className="text-center text-sm text-green-700">{state.message}</p>
+      )} */}
       {state?.success === false && (
-        <div className="mt-5 flex w-full items-center justify-center rounded-lg bg-red-100 p-4 text-sm text-red-700">
-          {state.message}
-        </div>
+        <p className="text-center text-sm text-red-700">{state.message}</p>
       )}
     </form>
   );

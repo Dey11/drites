@@ -1,14 +1,15 @@
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { auth } from "@clerk/nextjs/server";
-import { Bookmark, Heart, MessageCircle, Share2 } from "lucide-react";
+import { Bookmark, Heart, MessageCircle } from "lucide-react";
 import Markdown from "react-markdown";
 
 import Avatar from "@/components/avatar";
 import CommentSection from "@/components/comments/comments-section";
 import BookmarkButton from "@/components/interactions/bookmark";
 import LikeButton from "@/components/interactions/like";
+import ShareButton from "@/components/share-btn";
 import { H1 } from "@/components/typography/h1";
 import { H2 } from "@/components/typography/h2";
 import { H3 } from "@/components/typography/h3";
@@ -219,7 +220,9 @@ export default async function PostPage({ params }: Params) {
           </div>
 
           <div className="flex items-center gap-3">
-            <Share2 className="size-4" />
+            <ShareButton
+              url={`${process.env.NEXT_PUBLIC_APP_URL || ""}/posts/${slug}`}
+            />
           </div>
         </div>
       </div>

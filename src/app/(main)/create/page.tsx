@@ -12,7 +12,7 @@ export default async function CreatePage() {
   }
 
   return (
-    <div className="mx-auto mb-10 h-dvh max-w-screen-lg p-3">
+    <div className="mx-auto mb-10 min-h-dvh max-w-screen-lg p-3">
       <H2 className="py-5">Create a New Post</H2>
 
       <CreateForm />
