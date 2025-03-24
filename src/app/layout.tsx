@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import Providers from "@/components/providers";
 
 import "./globals.css";
@@ -61,6 +64,8 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
+        <SpeedInsights />
+        <Analytics />
         <body
           className={`${montserrat.variable} tracking-wide text-brand-text antialiased`}
         >
