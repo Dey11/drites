@@ -29,7 +29,7 @@ model Post {
   content     String @db.Text
   authorId    String
 
-  author   User       @relation(fields: [authorId], references: [id])
+  author   User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
   likes    PostLike[]
   Bookmark Bookmark[]
 
@@ -41,7 +41,7 @@ model Post {
 model PostLike {
   id     String @id @default(cuid())
   postId String
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
@@ -51,9 +51,9 @@ model PostLike {
 model Bookmark {
   id     String @id @default(cuid())
   postId String
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
@@ -61,9 +61,9 @@ model Bookmark {
 model Comment {
   id        String   @id @default(cuid())
   postId    String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   content   String   @db.Text
   createdAt DateTime @default(now())
 }

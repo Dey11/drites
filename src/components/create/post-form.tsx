@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 
-import { createPost } from "@/app/actions/create-post";
+import { createPost } from "@/app/actions/posts";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";

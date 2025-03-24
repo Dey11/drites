@@ -95,10 +95,14 @@ export default function ProfileTabSection({
         ))}
       </div>
 
-      {activeTab === "Posts" && <ProfilePostSection posts={posts} />}
-      {activeTab === "Likes" && <ProfilePostSection posts={likesData} />}
+      {activeTab === "Posts" && (
+        <ProfilePostSection posts={posts} activeTab={activeTab} />
+      )}
+      {activeTab === "Likes" && (
+        <ProfilePostSection posts={likesData} activeTab={activeTab} />
+      )}
       {activeTab === "Bookmarks" && (
-        <ProfilePostSection posts={bookmarksData} />
+        <ProfilePostSection posts={bookmarksData} activeTab={activeTab} />
       )}
     </div>
   );

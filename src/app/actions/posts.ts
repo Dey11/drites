@@ -11,6 +11,55 @@ type PreviousStateType = {
   message: string;
 };
 
+export async function deletePost(id: string) {
+  try {
+    const session = await auth();
+    if (!session.userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const post = await prisma.post.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        authorId: true,
+        author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+
+    if (post?.authorId !== session.userId) {
+      throw new Error("You are not authorized to delete this post");
+    }
+
+    await prisma.post.delete({
+      where: { id },
+    });
+
+    revalidatePath("/posts");
+    revalidatePath("/profile/" + post?.author.username);
+    return {
+      success: true,
+      message: "Post deleted successfully",
+    };
+  } catch (err) {
+    console.error(err);
+    if (err instanceof Error) {
+      return {
+        success: false,
+        message: err.message,
+      };
+    }
+    return {
+      success: false,
+      message: "Error deleting post",
+    };
+  }
+}
+
 export async function createPost(
   previousState: PreviousStateType | null,
   formData: FormData
