@@ -19,7 +19,7 @@ import { features } from "@/lib/constants";
 
 export default async function Home() {
   return (
-    <div className="pb-16">
+    <div className="">
       <div className="relative h-screen w-full overflow-hidden">
         <section className="absolute inset-0 flex flex-col items-center justify-center px-3 text-center">
           <Image
@@ -115,7 +115,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="absolute inset-x-0 mx-auto w-full bg-brand-section px-3 py-20 text-center">
+      <section className="mx-auto w-full bg-brand-section px-3 py-20 text-center">
         <H2>Join our community today</H2>
         <Para className="mx-auto max-w-2xl md:text-lg">
           Start reading and writing on topics that matter to you. Connect with a

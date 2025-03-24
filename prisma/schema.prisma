@@ -67,3 +67,13 @@ model Comment {
   content   String   @db.Text
   createdAt DateTime @default(now())
 }
+
+model Feedback {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  subject String
+  message String @db.Text
+
+  createdAt DateTime @default(now())
+}
