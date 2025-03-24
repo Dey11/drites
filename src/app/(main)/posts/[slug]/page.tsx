@@ -158,7 +158,7 @@ export default async function PostPage({ params }: Params) {
     <div className="mx-auto flex min-h-dvh max-w-screen-lg flex-col gap-5 px-4 py-8">
       <H1>{post.title}</H1>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pb-5">
         <Avatar name={post.author.username || post.author.name || "U"} />
         <div>
           <p className="text-sm font-semibold">

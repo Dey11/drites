@@ -107,10 +107,9 @@ export default async function ProfilePage({ params }: ProfileProps) {
   ]);
 
   return (
-    <div>
-      <div className="mx-auto min-h-dvh max-w-screen-lg p-3 pt-5">
-        <div className="flex items-center gap-5"></div>
-        <Avatar name={username} className="md:size-20 md:text-3xl" />
+    <div className="mx-auto min-h-dvh max-w-screen-lg p-3 pt-5">
+      <div className="flex items-center gap-5">
+        <Avatar name={username} className="size-16 md:size-20 md:text-3xl" />
 
         <div className="flex flex-col gap-1">
           <p className="text-2xl font-semibold tracking-tight">{user.name}</p>

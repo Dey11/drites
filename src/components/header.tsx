@@ -2,12 +2,27 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+
+import { prisma } from "@/lib/prisma";
 
 import { H3 } from "./typography/h3";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
-const Header = () => {
+const Header = async () => {
+  const session = await auth();
+  let user;
+  if (session.userId) {
+    user = await prisma.user.findUnique({
+      where: {
+        id: session.userId,
+      },
+      select: {
+        username: true,
+      },
+    });
+  }
+
   return (
     <header className="flex border-b border-brand-blue p-3">
       <div className="mx-auto flex w-full max-w-screen-lg items-center justify-between">
@@ -22,6 +37,7 @@ const Header = () => {
           <SignedOut>
             <Button asChild>
               <SignInButton
+                mode="modal"
                 forceRedirectUrl={"/posts"}
                 signUpForceRedirectUrl={"/posts"}
               />
@@ -29,12 +45,13 @@ const Header = () => {
           </SignedOut>
           <SignedIn>
             <div className="flex items-center gap-x-2">
-              {/* <Input
-                placeholder="Search Posts..."
-                className="mx-2 h-9 border border-black bg-brand-section"
-              /> */}
+              <Link href={"/profile/" + user?.username}>
+                <Button className="px-3 text-sm font-medium">Profile</Button>
+              </Link>
               <Link href={"/create"}>
-                <Button className="font-medium">Create Post</Button>
+                <Button className="px-3 text-sm font-medium">
+                  Create Post
+                </Button>
               </Link>
               <UserButton />
             </div>

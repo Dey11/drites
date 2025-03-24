@@ -96,7 +96,6 @@ export default async function Home() {
                 Discover stories, thinking, and expertise from writers on any
                 topic.
               </Para>
-
               <ul className="flex flex-col gap-y-2">
                 <li className="flex items-center gap-x-2">
                   <Tag className="size-4 text-brand-blue" />
@@ -107,8 +106,11 @@ export default async function Home() {
                   Save and share stories
                 </li>
               </ul>
-
-              <Button className="w-fit font-normal">Explore Categories</Button>
+              <Link href={"/posts"}>
+                <Button className="w-fit font-normal">
+                  Explore Categories
+                </Button>
+              </Link>{" "}
             </div>
           </div>
 
@@ -131,7 +133,9 @@ export default async function Home() {
                 </li>
               </ul>
 
-              <Button className="w-fit font-normal">Start Writing</Button>
+              <Link href={"/posts/create"}>
+                <Button className="w-fit font-normal">Start Writing</Button>
+              </Link>
             </div>
           </div>
         </div>
