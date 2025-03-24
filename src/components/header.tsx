@@ -24,7 +24,7 @@ const Header = async () => {
   }
 
   return (
-    <header className="flex border-b border-brand-blue p-3">
+    <header className="flex border-b border-slate-400 p-3">
       <div className="mx-auto flex w-full max-w-screen-lg items-center justify-between">
         <Link href="/">
           <H3>Drites.</H3>
