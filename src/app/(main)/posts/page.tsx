@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Bookmark, Heart } from "lucide-react";
 
 import { H2 } from "@/components/typography/h2";
@@ -70,31 +72,33 @@ function PostCard({
   createdAt,
 }: PostType) {
   return (
-    <div className="flex w-full flex-col gap-2 rounded-lg p-5 shadow-md">
-      <div className="flex items-center gap-2">
-        <div className="flex size-8 items-center justify-center rounded-full bg-slate-300">
-          {author.charAt(0).toUpperCase()}
+    <Link href={`/posts/${id}`}>
+      <div className="flex w-full flex-col gap-2 rounded-lg p-5 shadow-md">
+        <div className="flex items-center gap-2">
+          <div className="flex size-8 items-center justify-center rounded-full bg-slate-300">
+            {author.charAt(0).toUpperCase()}
+          </div>
+          <div className="text-sm">
+            <p className="font-medium">{author}</p>
+            <p className="text-xs">{createdAt}</p>
+          </div>
         </div>
-        <div className="text-sm">
-          <p className="font-medium">{author}</p>
-          <p className="text-xs">{createdAt}</p>
-        </div>
-      </div>
 
-      <h3 className="line-clamp-1 text-lg font-bold">{title}</h3>
+        <h3 className="line-clamp-1 text-lg font-bold">{title}</h3>
 
-      <p className="line-clamp-2">
-        {description.slice(0, 100) + (description.length > 100 ? "..." : "")}
-      </p>
-
-      <div className="flex items-center justify-between text-sm">
-        <p className="flex items-center gap-1">
-          <Heart className="size-4 cursor-pointer" />
-          {likes}
+        <p className="line-clamp-2">
+          {description.slice(0, 100) + (description.length > 100 ? "..." : "")}
         </p>
 
-        <Bookmark className="size-4 cursor-pointer" />
+        <div className="flex items-center justify-between text-sm">
+          <p className="flex items-center gap-1">
+            <Heart className="size-4 cursor-pointer" />
+            {likes}
+          </p>
+
+          <Bookmark className="size-4 cursor-pointer" />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

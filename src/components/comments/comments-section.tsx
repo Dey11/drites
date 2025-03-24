@@ -41,7 +41,7 @@ export default async function CommentSection({
             ))}
           </div>
         ) : (
-          <p>No comments yet</p>
+          <p className="mt-5 px-2 text-sm text-slate-700">No comments yet</p>
         )}
       </div>
     </div>

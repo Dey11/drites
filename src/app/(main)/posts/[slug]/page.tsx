@@ -7,6 +7,8 @@ import Markdown from "react-markdown";
 
 import Avatar from "@/components/avatar";
 import CommentSection from "@/components/comments/comments-section";
+import BookmarkButton from "@/components/interactions/bookmark";
+import LikeButton from "@/components/interactions/like";
 import { H1 } from "@/components/typography/h1";
 import { H2 } from "@/components/typography/h2";
 import { H3 } from "@/components/typography/h3";
@@ -47,6 +49,8 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
   const session = await auth();
+  let userHasLiked = false;
+  let userHasBookmarked = false;
 
   const [post, comments] = await Promise.all([
     prisma.post.findUnique({
@@ -56,7 +60,12 @@ export default async function PostPage({ params }: Params) {
       select: {
         title: true,
         content: true,
-        author: true,
+        author: {
+          select: {
+            username: true,
+            name: true,
+          },
+        },
         createdAt: true,
         likes: true,
       },
@@ -79,6 +88,26 @@ export default async function PostPage({ params }: Params) {
     }),
   ]);
 
+  if (session.userId) {
+    const [postLiked, postBookmarked] = await Promise.all([
+      prisma.postLike.findFirst({
+        where: {
+          postId: slug,
+          userId: session.userId!,
+        },
+      }),
+      prisma.bookmark.findFirst({
+        where: {
+          postId: slug,
+          userId: session.userId!,
+        },
+      }),
+    ]);
+
+    userHasLiked = postLiked ? true : false;
+    userHasBookmarked = postBookmarked ? true : false;
+  }
+
   const commentsArr = comments.map((comment) => {
     return {
       id: comment.id,
@@ -99,9 +128,11 @@ export default async function PostPage({ params }: Params) {
       <H1>{post.title}</H1>
 
       <div className="flex items-center gap-2">
-        <Avatar name={post.author.name || "U"} />
+        <Avatar name={post.author.username || post.author.name || "U"} />
         <div>
-          <p className="text-sm font-semibold">{post.author.name}</p>
+          <p className="text-sm font-semibold">
+            {post.author.username || post.author.name}
+          </p>
           <p className="text-xs">
             Posted on {post.createdAt.toLocaleDateString()}
           </p>
@@ -134,10 +165,12 @@ export default async function PostPage({ params }: Params) {
 
       <div className="flex justify-between px-2">
         <div className="flex items-center gap-10">
-          <div className="flex items-center gap-2">
-            <Heart className="size-4" />
-            <span className="text-sm">{post.likes.length} Likes</span>
-          </div>
+          <LikeButton
+            isLiked={userHasLiked}
+            likes={post.likes.length}
+            disabled={session.userId ? false : true}
+            postId={slug}
+          />
 
           <div className="flex items-center gap-2">
             <MessageCircle className="size-4" />
@@ -147,7 +180,11 @@ export default async function PostPage({ params }: Params) {
 
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-3">
-            <Bookmark className="size-4" />
+            <BookmarkButton
+              isBookmarked={userHasBookmarked}
+              disabled={session.userId ? false : true}
+              postId={slug}
+            />
           </div>
 
           <div className="flex items-center gap-3">
