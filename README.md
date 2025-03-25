@@ -2,6 +2,10 @@
 
 A modern blogging platform built with Next.js, TypeScript, and PostgreSQL.
 
+Login credentials:
+admin
+randompass02
+
 ## Features
 
 - User authentication and profiles
