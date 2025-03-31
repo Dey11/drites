@@ -18,7 +18,7 @@ type SitemapEntry = {
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://drites.site";
+  const baseUrl = "https://www.drites.site";
 
   const staticPages: SitemapEntry[] = [
     {
