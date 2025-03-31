@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { auth } from "@clerk/nextjs/server";
-import { Bookmark, Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Markdown from "react-markdown";
 
 import Avatar from "@/components/avatar";
@@ -236,14 +236,14 @@ export default async function PostPage({ params }: Params) {
   );
 }
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    select: {
-      id: true,
-    },
-  });
+// export async function generateStaticParams() {
+//   const posts = await prisma.post.findMany({
+//     select: {
+//       id: true,
+//     },
+//   });
 
-  return posts.map((post) => ({
-    slug: post.id,
-  }));
-}
+//   return posts.map((post) => ({
+//     slug: post.id,
+//   }));
+// }
