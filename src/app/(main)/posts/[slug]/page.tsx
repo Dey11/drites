@@ -188,6 +188,26 @@ export default async function PostPage({ params }: Params) {
           p: ({ children }) => (
             <p className="text-base font-normal">{children}</p>
           ),
+          a: ({ children, href }) => (
+            <a href={href} className="text-blue-500 underline">
+              {children}
+            </a>
+          ),
+          pre: ({ children }) => (
+            <pre className="overflow-x-auto rounded-md bg-gray-100 p-4 text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+              {children}
+            </pre>
+          ),
+          code: ({ children }) => (
+            <code className="rounded-md bg-gray-100 p-1 text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+              {children}
+            </code>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:border-gray-700 dark:text-gray-400">
+              {children}
+            </blockquote>
+          ),
         }}
       >
         {post.content}

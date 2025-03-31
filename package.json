@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.460.0",
     "next": "15.2.1",
+    "nextjs-toploader": "^3.8.16",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "prisma": "^6.5.0",

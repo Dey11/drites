@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/components/providers";
 
@@ -69,6 +70,7 @@ export default function RootLayout({
         <body
           className={`${montserrat.variable} tracking-wide text-brand-text antialiased`}
         >
+          <NextTopLoader showSpinner={false} color="#8bd3dd" />
           <main className="mx-auto">{children}</main>
         </body>
       </html>
