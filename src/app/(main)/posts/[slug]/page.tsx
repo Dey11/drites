@@ -1,15 +1,12 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import { auth } from "@clerk/nextjs/server";
-import { MessageCircle } from "lucide-react";
 import Markdown from "react-markdown";
 
 import Avatar from "@/components/avatar";
-import CommentSection from "@/components/comments/comments-section";
-import BookmarkButton from "@/components/interactions/bookmark";
-import LikeButton from "@/components/interactions/like";
-import ShareButton from "@/components/share-btn";
+import ButtonsSection from "@/components/posts/buttons-section";
 import { H1 } from "@/components/typography/h1";
 import { H2 } from "@/components/typography/h2";
 import { H3 } from "@/components/typography/h3";
@@ -81,74 +78,28 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
   const session = await auth();
-  let userHasLiked = false;
-  let userHasBookmarked = false;
-
-  const [post, comments] = await Promise.all([
-    prisma.post.findUnique({
-      where: {
-        id: slug,
-      },
-      select: {
-        title: true,
-        content: true,
-        author: {
-          select: {
-            username: true,
-            name: true,
-          },
-        },
-        createdAt: true,
-        likes: true,
-      },
-    }),
-    prisma.comment.findMany({
-      where: {
-        postId: slug,
-      },
-      select: {
-        id: true,
-        content: true,
-        createdAt: true,
-        userId: true,
-        user: {
-          select: {
-            username: true,
-          },
-        },
-      },
-    }),
-  ]);
+  let isLoggedIn = false;
 
   if (session.userId) {
-    const [postLiked, postBookmarked] = await Promise.all([
-      prisma.postLike.findFirst({
-        where: {
-          postId: slug,
-          userId: session.userId!,
-        },
-      }),
-      prisma.bookmark.findFirst({
-        where: {
-          postId: slug,
-          userId: session.userId!,
-        },
-      }),
-    ]);
-
-    userHasLiked = postLiked ? true : false;
-    userHasBookmarked = postBookmarked ? true : false;
+    isLoggedIn = true;
   }
 
-  const commentsArr = comments.map((comment) => {
-    return {
-      id: comment.id,
-      content: comment.content,
-      user: comment.user.username!,
-      img: "Placeholder", // Placeholder for user image
-      userId: comment.userId,
-      createdAt: comment.createdAt.toISOString(),
-    };
+  const post = await prisma.post.findUnique({
+    where: {
+      id: slug,
+    },
+    select: {
+      title: true,
+      content: true,
+      author: {
+        select: {
+          username: true,
+          name: true,
+        },
+      },
+      createdAt: true,
+      likes: true,
+    },
   });
 
   if (!post) {
@@ -215,43 +166,13 @@ export default async function PostPage({ params }: Params) {
 
       <hr className="my-5" />
 
-      <div className="flex justify-between px-2">
-        <div className="flex items-center gap-10">
-          <LikeButton
-            isLiked={userHasLiked}
-            likes={post.likes.length}
-            disabled={session.userId ? false : true}
-            postId={slug}
-          />
-
-          <div className="flex items-center gap-2">
-            <MessageCircle className="size-4" />
-            <span className="text-sm">{commentsArr.length} Comments</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-10">
-          <div className="flex items-center gap-3">
-            <BookmarkButton
-              isBookmarked={userHasBookmarked}
-              disabled={session.userId ? false : true}
-              postId={slug}
-            />
-          </div>
-
-          <div className="flex items-center gap-3">
-            <ShareButton
-              url={`${process.env.NEXT_PUBLIC_APP_URL || ""}/posts/${slug}`}
-            />
-          </div>
-        </div>
-      </div>
-
-      <CommentSection
-        comments={commentsArr}
-        postId={slug}
-        isLoggedIn={session.userId ? true : false}
-      />
+      <Suspense>
+        <ButtonsSection
+          likes={post.likes.length}
+          slug={slug}
+          userId={session.userId ? session.userId : null}
+        />
+      </Suspense>
     </div>
   );
 }

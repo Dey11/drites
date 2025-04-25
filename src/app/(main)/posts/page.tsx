@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { Bookmark, Heart } from "lucide-react";
 
@@ -52,22 +53,26 @@ const page = async () => {
     <div className="mx-auto min-h-dvh max-w-screen-lg px-3 pb-10">
       <H2 className="py-5">Latest Posts</H2>
 
-      {allPosts.map((post) => (
-        <div key={post.id} className="mb-3">
-          <PostCard
-            id={post.id}
-            title={post.title}
-            description={post.description!}
-            likes={post.likes.length}
-            author={post.author.username!}
-            createdAt={post.createdAt.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          />
-        </div>
-      ))}
+      <Suspense
+        fallback={<div className="h-dvh text-center">Loading posts...</div>}
+      >
+        {allPosts.map((post) => (
+          <div key={post.id} className="mb-3">
+            <PostCard
+              id={post.id}
+              title={post.title}
+              description={post.description!}
+              likes={post.likes.length}
+              author={post.author.username!}
+              createdAt={post.createdAt.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            />
+          </div>
+        ))}
+      </Suspense>
     </div>
   );
 };

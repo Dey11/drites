@@ -14,7 +14,7 @@ type CommentsSectionProps = {
   isLoggedIn: boolean;
 };
 
-export default async function CommentSection({
+export default async function Comments({
   comments,
   postId,
   isLoggedIn,
